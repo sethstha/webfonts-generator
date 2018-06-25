@@ -6,6 +6,7 @@ var _ = require('underscore')
 var generateFonts = require('./generateFonts')
 var renderCss = require('./renderCss')
 var renderHtml = require('./renderHtml')
+var getPaths = require('./getPaths')
 
 var TEMPLATES_DIR = path.join(__dirname, '..', 'templates')
 var TEMPLATES = {
@@ -52,6 +53,9 @@ var webfont = function(options, done) {
 	if (options.files === undefined) return done(new Error('"options.files" is undefined.'))
 	if (!options.files.length) return done(new Error('"options.files" is empty.'))
 
+	// Change glob file paths into readable paths
+	options.files = getPaths(options.files)
+	
 	// We modify codepoints later, so we can't use same object from default options.
 	if (options.codepoints === undefined) options.codepoints = {}
 
